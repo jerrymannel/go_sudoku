@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
 func drawHorizontalLine(pos string) {
@@ -48,7 +47,6 @@ func drawHorizontalLine(pos string) {
 	fmt.Println(s)
 }
 
-//DisplayGrid display the sudoku _grid
 func displayGrid(_grid *Cell) {
 	head := _grid
 	drawHorizontalLine("top")
@@ -57,10 +55,10 @@ func displayGrid(_grid *Cell) {
 		fmt.Print("│")
 		xCounter := 0
 		for _grid != nil {
-			if _grid.Value == 0 {
+			if _grid.Value == "0" {
 				fmt.Print(" " + " " + " ")
 			} else {
-				fmt.Print(" " + strconv.Itoa(_grid.Value) + " ")
+				fmt.Print(" " + _grid.Value + " ")
 			}
 			xCounter++
 			_grid = _grid.Right
@@ -80,5 +78,22 @@ func displayGrid(_grid *Cell) {
 				drawHorizontalLine("")
 			}
 		}
+	}
+}
+
+func displayGridRowByRow(_cell *Cell) {
+	for i := 1; i <= 9; i++ {
+		c := _cell
+		fmt.Printf("R%d -> ", i)
+		for c != nil {
+			if c.Contenders != "" {
+				fmt.Printf(" [%s] ", c.Contenders)
+			} else {
+				fmt.Printf(" %s ", c.Value)
+			}
+			c = c.Right
+		}
+		fmt.Println()
+		_cell = _cell.Down
 	}
 }
